@@ -34,7 +34,10 @@ export default function App(){
     } else if(blueSixCount >= 3){
       setWinner("Blue");
       setModalOpen(true);
-    } else if (redTeam.length >= 15 || blueTeam.length >= 15){
+    }else if (redSixCount === 3 && blueSixCount === 3) {
+      setWinner("무승부");
+      setModalOpen(true);
+    }else if (redTeam.length >= 15 || blueTeam.length >= 15){
       if (redDiceSum > blueDiceSum){
         setWinner("Red");
         setModalOpen(true);
@@ -70,7 +73,7 @@ export default function App(){
       <p>우선 팀을 골라주세요.<br />주사위 굴리기 버튼을 누르면 자동으로 주사위를 굴립니다.<br />주사위를 총 15번 던질 동안 6이 3번 먼저 나오는 팀이 이깁니다.<br />
       만약 6이 잘 안 나와서 승부가 나질 않았다면,<br />
       그동안 나온 주사위 눈의 총합이 더 높은 팀이 이깁니다.</p>
-      <span>그럴 일은 거의 없겠지만 주사위의 총합마저 무승부가 나왔다면 다시 게임을 합시다.</span>
+      <span>동시에 6이 3번 뜨게 되거나, 주사위의 총합마저 같아서 무승부가 나왔다면 다시 게임을 합시다.</span>
       <div id="container">
         <div className="btn">
         <Button onClick={playClick}>주사위굴리기</Button>
