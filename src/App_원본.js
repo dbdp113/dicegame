@@ -16,7 +16,6 @@ export default function App(){
   const [modalOpen,setModalOpen] = useState(false);
   const closeModal = () => setModalOpen(false);
 
-  
   //폰트컬러
   const fontColor = Winner === "Red" ? "#ca1515" : "#1e15ca";
 
@@ -27,40 +26,44 @@ export default function App(){
   const redDiceSum = redTeam.reduce((a,b) => a + b ,0);
   const blueDiceSum = blueTeam.reduce((a,b) => a + b ,0);
 
+  const player = {
+    red:[redSixCount,redDiceSum,diceNum],
+    blue:[blueSixCount,blueDiceSum,diceNum]
+  };
+
+  function checkScore(){
+
+  }
 
   function playClick(){
-    if (redSixCount > 2 || blueSixCount > 2 ) {
-      let sixScore = redSixCount - blueSixCount;
-       switch (true) {
-        case sixScore > 0:
-          setWinner("Red");
-          setModalOpen(true);
-          break;
-        case sixScore < 0:
-          setWinner("Blue");
-          setModalOpen(true);
-          break;
-        case sixScore === 0:
-          setWinner("무승부");
-          setModalOpen(true);
-          break;
-        default:
-          setWinner("");
-          setModalOpen(true);
-          break;
-        }
+    if (redSixCount >= 3) {
+        setWinner("Red");
+        setModalOpen(true);
         return;
-    } else{
-      if (diceNum === 15){
-        if(redDiceSum === blueDiceSum){
-          setWinner("무승부");
-          setModalOpen(true);
-        } else {
-          setWinner(redDiceSum > blueDiceSum ? "Red" : "Blue");
-          setModalOpen(true);
-        }
+    } else if(blueSixCount >= 3){
+      setWinner("Blue");
+      setModalOpen(true);
+      return;
+    }else if (redSixCount === 3 && blueSixCount === 3) {
+      setWinner("무승부");
+      setModalOpen(true);
+      return;
+    }else if (redTeam.length >= 15 || blueTeam.length >= 15){
+      if (redDiceSum > blueDiceSum){
+        setWinner("Red");
+        setModalOpen(true);
+        return;
+      } else if(blueDiceSum > redDiceSum){
+        setWinner("Blue");
+        setModalOpen(true);
+        return;
+      } else if(redDiceSum === blueDiceSum){
+        setWinner("무승부");
+        setModalOpen(true);
+        return;
       }
     }
+
     if(redTeam.length < 15 && blueTeam.length < 15){
       const redDice = random(6);
       const blueDice = random(6);
@@ -99,7 +102,7 @@ export default function App(){
       </div>
     </div>
     <div id="modal" style={{display: modalOpen ? "block" : "none" }}>
-      <div className="box">
+      <p>
       <h3>결 과</h3>
       {Winner !== "무승부" ? (
       <span><b style={{color:fontColor}}>{Winner}</b> 팀 승리!</span>
@@ -107,8 +110,8 @@ export default function App(){
       <span>{Winner}입니다!</span>
     )}
       <Button onClick={resetGame}>다시 하기</Button>
-      <Button onClick={closeModal}><i className="fa-solid fa-x"></i></Button>
-      </div>
+      <Button onClick={closeModal}><i class="fa-solid fa-x"></i></Button>
+      </p>
     </div>
     </>
   )

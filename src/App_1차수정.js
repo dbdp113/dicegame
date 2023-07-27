@@ -16,7 +16,6 @@ export default function App(){
   const [modalOpen,setModalOpen] = useState(false);
   const closeModal = () => setModalOpen(false);
 
-  
   //폰트컬러
   const fontColor = Winner === "Red" ? "#ca1515" : "#1e15ca";
 
